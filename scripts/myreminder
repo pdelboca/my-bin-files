@@ -1,0 +1,42 @@
+#!/bin/bash
+# Process Command Line Options
+
+VERSION_INFO=$"Version: 0.0.1
+Written by Patricio Del Boca.
+Inspired in: https://twitter.com/climagic/status/695266516212801537"
+
+print_usage(){
+echo "Usage: myreminder -t NUMBER[SUFFIX] -m TEXT
+    -t, --time          Sleep time. Eg: 30s, 5m, 2d. See man sleep for more detail.
+    -m, --message       Message to be displayed.
+    -h, --help          Display this help and exit.
+        --version       Output version information and exit
+"
+}
+while [ "$1" != "" ]; do
+    case $1 in
+        -t | --time )           shift
+                                this_time=$1
+                                ;;
+        -m | --message )        shift
+                                message=$1
+                                ;;
+        --help )                print_usage
+                                exit
+                                ;;
+        --version )             echo "$VERSION_INFO"
+                                exit
+                                ;;
+        * )                     print_usage
+                                exit 1
+    esac
+    shift
+done
+
+# Create a function so it can be run in background
+reminder(){
+sleep $this_time; xmessage -nearmouse $message
+exit
+}
+
+reminder &
