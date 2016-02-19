@@ -1,9 +1,6 @@
 #!/bin/bash
 DESTINATION_FOLDER="$HOME/bin/"
 
-echo "This program will install all the scripts in $DESTINATION_FOLDER"
-read -p "Do you wish to continue? [y/n]" yn
-
 install(){
     if [ -d $DESTINATION_FOLDER ]; then
         echo "$DESTINATION_FOLDER already exists."
@@ -29,6 +26,9 @@ install(){
     echo "Please add $DESTINATION_FOLDER to your PATH variable in order to run the commands"
     exit
 }
+
+echo "This program will install all the scripts in $DESTINATION_FOLDER"
+read -p "Do you wish to continue? [y/n]" yn
 
 case $yn in
     [Yy]* ) install;;
