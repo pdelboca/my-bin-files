@@ -1,0 +1,49 @@
+#!/bin/bash
+# Shows the current weather in Alta Gracia (default)
+# This could have been done with an alias, but I wanted to practice some bash scripting. ;)
+# It uses the web http://wttr.in/<my_city>
+
+VERSION_INFO=$"Version: 0.0.1
+Written by Patricio Del Boca.
+Data adquired in http://wttr.in/ by Igor Chubin (@igor_chubin)"
+city="alta_gracia"
+
+print_usage(){
+    echo "    Usage: mywheather
+    Shows the weather condition and forecast for a city. Default is $city.
+
+    Options:
+        -c, --city              Show wheater for this city. Must be lowercase
+                                separated by underscored.
+                                Eg: alta_gracia, rio_cuarto, cordoba, buenos_aires.
+        -h, --help              Display this help and exit.
+            --version           Output version information and exit
+    "
+}
+
+# Process Command Line Options
+while [ "$1" != "" ]; do
+    case $1 in
+        -c | --city )           city=$2
+                                shift 2
+                                ;;
+        -h | --help )           print_usage
+                                exit
+                                ;;
+        --version )             echo "$VERSION_INFO"
+                                exit
+                                ;;
+        * )                     print_usage
+                                exit 1
+    esac
+    shift
+done
+
+# Main Program
+if hash curl 2>/dev/null; then
+    curl  "http://wttr.in/$city"
+    exit 0
+else
+    echo "Weather requires package curl to be installed."
+    exit 1
+fi
