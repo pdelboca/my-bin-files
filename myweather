@@ -24,8 +24,8 @@ print_usage(){
 # Process Command Line Options
 while [ "$1" != "" ]; do
     case $1 in
-        -c | --city )           city=$2
-                                shift 2
+        -c | --city )           shift
+                                city=$1
                                 ;;
         -h | --help )           print_usage
                                 exit
